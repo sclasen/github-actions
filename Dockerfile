@@ -45,4 +45,16 @@ FROM docker:${DND_VERSION}
 
 COPY --from=builder /src/bin/github-actions /github-actions
 
+# install pack, cache the builders
+
+RUN mkdir -p /usr/local/bin
+
+COPY scripts/install_pack.sh /usr/local/bin/install.pack.sh
+
+WORKDIR /usr/local/bin
+
+RUN /usr/local/bin/install.pack.sh
+
+
+
 ENTRYPOINT ["/github-actions"]
